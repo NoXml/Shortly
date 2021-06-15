@@ -1,0 +1,119 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "{protocol}://{host}:{port}",
+      "variables": {
+        "protocol": {
+          "enum": [
+            "http"
+          ],
+          "default": "http"
+        },
+        "host":{
+          "default": "localhost"
+        },
+        "port": {
+          "enum": [
+            "80"
+          ],
+          "default": "80"
+        }
+      }
+    }
+  ],
+  "info": {
+    "title": "Shortly API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/urls": {
+      "post": {
+        "requestBody": {
+          "description": "Url to add",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewLink"
+              }
+            }
+          }
+        },
+        "summary": "Map your url to short link",
+        "responses": {
+          "200": {
+            "description": "Short link generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                      "$ref": "#/components/schemas/Link"
+                    }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NewLink": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "example": "https://ru.uefa.com/uefaeuro-2020/",
+            "type": "string"
+          }
+        }
+      },
+      "Link": {
+        "type": "object",
+        "required": [
+          "short",
+          "url"
+        ],
+        "properties": {
+          "short": {
+            "example": "http://localhost:80/a5f4d9",
+            "type": "string"
+          },
+          "url": {
+            "example": "https://ru.uefa.com/uefaeuro-2020/",
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "example": "BadRequest",
+            "type": "string"
+          },
+          "message": {
+            "example": "Parameter 'url' must be not blank",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
