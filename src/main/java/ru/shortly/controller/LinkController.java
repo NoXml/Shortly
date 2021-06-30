@@ -16,9 +16,15 @@ public class LinkController {
     @PostMapping(value = "/urls", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object create(@RequestBody NewLink newLink) {
         if (newLink.getUrl().equals("")) {
-            return new Error("BadRequest", "Parameter 'url' must be not blank");
+            return new Error.Builder()
+                    .withCode("BadRequest")
+                    .withMessage("Parameter 'url' must be not blank")
+                    .build();
         } else {
-            return new Link(newLink.getUrl(), "http://localhost:80/a5f4d9");
+            return new Link.Builder()
+                    .withUrl(newLink.getUrl())
+                    .withShortUrl("http://localhost:80/a5f4d9")
+                    .build();
         }
     }
 }

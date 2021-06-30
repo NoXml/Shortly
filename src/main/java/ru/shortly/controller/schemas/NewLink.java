@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NewLink {
-    private String url;
+    private final String url;
 
     @JsonCreator
-    public NewLink(@JsonProperty("url") String url) {
+    private NewLink(@JsonProperty("url") String url) {
         this.url = url;
     }
 
@@ -15,12 +15,23 @@ public class NewLink {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public static class Builder {
+        private String url;
+
+        public Builder withUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public NewLink build() {
+            return new NewLink(url);
+        }
     }
 
     @Override
     public String toString() {
-        return url;
+        return "NewLink{" +
+                "url='" + url + '\'' +
+                '}';
     }
 }
