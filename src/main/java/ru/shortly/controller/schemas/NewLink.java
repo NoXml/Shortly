@@ -7,7 +7,7 @@ public class NewLink {
     private final String url;
 
     @JsonCreator
-    private NewLink(@JsonProperty("url") String url) {
+    public NewLink(@JsonProperty("url") String url) {
         this.url = url;
     }
 
