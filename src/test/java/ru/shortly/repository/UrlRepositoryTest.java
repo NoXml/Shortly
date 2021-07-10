@@ -29,7 +29,7 @@ class UrlRepositoryTest {
 
         try {
             urls.putLink(newKey, newLink_2);
-        } catch (IllegalArgumentException exception) {
+        } catch (Exception exception) {
             final String expected = "This key is already saved";
             assertEquals(expected, exception.getMessage());
         }
