@@ -7,7 +7,7 @@ public class NewLink {
     private final String url;
 
     @JsonCreator
-    public NewLink(@JsonProperty("url") String url) {
+    private NewLink(@JsonProperty("url") String url) {
         this.url = url;
     }
 
@@ -26,6 +26,10 @@ public class NewLink {
         public NewLink build() {
             return new NewLink(url);
         }
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Override

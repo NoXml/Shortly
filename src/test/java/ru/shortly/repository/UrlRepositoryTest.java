@@ -5,18 +5,33 @@ import ru.shortly.controller.schemas.NewLink;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.HashMap;
-
 class UrlRepositoryTest {
 
-    UrlRepository urls = new UrlRepository(new HashMap<>());
+    UrlRepository urls = new UrlRepository();
 
     @Test
-    void checkClass() {
+    void putIsSameAsGet() {
         String newKey = urls.generateUrlPath();
-        NewLink newLink = new NewLink("https://ru.uefa.com/uefaeuro-2020/");
-        urls.putLink(newLink, newKey);
+
+        NewLink newLink = NewLink.builder().withUrl("https://ru.uefa.com/uefaeuro-2020/").build();
+        urls.putLink(newKey, newLink);
 
         assertEquals(newLink, urls.getLink(newKey));
+    }
+
+    @Test
+    void keyIsAlreadySaved() {
+        String newKey = urls.generateUrlPath();
+        NewLink newLink_1 = NewLink.builder().withUrl("https://ru.uefa.com/uefaeuro/").build();
+        NewLink newLink_2 = NewLink.builder().withUrl("https://ru.uefa.com/").build();
+
+        urls.putLink(newKey, newLink_1);
+
+        try {
+            urls.putLink(newKey, newLink_2);
+        } catch (IllegalArgumentException exception) {
+            final String expected = "This key is already saved";
+            assertEquals(expected, exception.getMessage());
+        }
     }
 }
