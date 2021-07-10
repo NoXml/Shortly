@@ -1,0 +1,23 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  buildBackend:
+    name: Build backend
+    if: startsWith(github.head_ref, 'feature/') == true
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout directory
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '16'
+          java-package: jdk
+          distribution: 'adopt'
+          architecture: x64
+      - name: Build with Gradle
+        run: gradle build --info
