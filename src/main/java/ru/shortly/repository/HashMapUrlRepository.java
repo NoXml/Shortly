@@ -7,14 +7,14 @@ import java.util.HashMap;
 import java.util.Random;
 
 @Service
-public class UrlRepository {
+public class HashMapUrlRepository {
 
     private final HashMap<String, NewLink> urls;
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
     private static final int urlPathLength = 6;
     private static final Random random = new Random();
 
-    public UrlRepository() {
+    public HashMapUrlRepository() {
         this.urls = new HashMap<String, NewLink>();
     }
 
