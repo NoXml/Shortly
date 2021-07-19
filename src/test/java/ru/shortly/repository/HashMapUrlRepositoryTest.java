@@ -10,9 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HashMapUrlRepositoryTest {
 
-    @Autowired
-    private MockMvc mvc;
-
     private final HashMapUrlRepository urls = new HashMapUrlRepository();
 
     @Test
