@@ -8,10 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.shortly.controller.schemas.Error;
 import ru.shortly.controller.schemas.Link;
 import ru.shortly.controller.schemas.NewLink;
+import ru.shortly.repository.UrlRepository;
+
 
 @RestController
 @RequestMapping
 public class LinkController {
+
+    private final UrlRepository urlRepository;
+
+    public LinkController(UrlRepository urlRepository) {
+        this.urlRepository = urlRepository;
+    }
 
     @PostMapping(value = "/urls", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object create(@RequestBody NewLink newLink) {

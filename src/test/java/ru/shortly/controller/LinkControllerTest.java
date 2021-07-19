@@ -1,4 +1,4 @@
-package ru.shortly;
+package ru.shortly.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ShortlyApplicationTests {
+class LinkControllerTest {
 
     @Autowired
     private MockMvc mvc;

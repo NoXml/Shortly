@@ -1,15 +1,18 @@
 package ru.shortly.repository;
 
+import org.springframework.stereotype.Service;
 import ru.shortly.controller.schemas.NewLink;
 
 import java.util.HashMap;
 import java.util.Random;
 
+@Service
 public class UrlRepository {
 
-    public final HashMap<String, NewLink> urls;
+    private final HashMap<String, NewLink> urls;
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
     private static final int urlPathLength = 6;
+    private static final Random random = new Random();
 
     public UrlRepository() {
         this.urls = new HashMap<String, NewLink>();
@@ -17,7 +20,6 @@ public class UrlRepository {
 
 
     public String generateUrlPath() {
-        Random random = new Random();
         char[] charsUrlPath = new char[urlPathLength];
 
         for (int i = 0; i <= charsUrlPath.length - 1; i++) {
