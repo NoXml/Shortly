@@ -27,6 +27,29 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/{shortLinkId}": {
+      "description": "",
+      "parameters": [
+        {
+          "name": "shortLinkId",
+          "in": "path",
+          "description": "Short link id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "example": "a5f4d9"
+        }
+      ],
+      "get": {
+        "operationId": "getLongUrlByShortLinkId",
+        "responses": {
+          "default": {
+            "description": "Content from requested link"
+          }
+        }
+      }
+    },
     "/urls": {
       "post": {
         "requestBody": {
@@ -47,8 +70,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                      "$ref": "#/components/schemas/Link"
-                    }
+                  "$ref": "#/components/schemas/Link"
+                }
               }
             }
           },
@@ -83,15 +106,28 @@
       "Link": {
         "type": "object",
         "required": [
-          "short",
-          "url"
+          "longLink",
+          "shortLink"
         ],
         "properties": {
-          "short": {
-            "example": "http://localhost:80/a5f4d9",
-            "type": "string"
+          "shortLink": {
+            "type": "object",
+            "properties": {
+              "host": {
+                "type": "string",
+                "example": "http://localhost:80/"
+              },
+              "id": {
+                "type": "string",
+                "example": "a5f4d9"
+              },
+              "url": {
+                "type": "string",
+                "example": "http://localhost:80/a5f4d9"
+              }
+            }
           },
-          "url": {
+          "longLink": {
             "example": "https://ru.uefa.com/uefaeuro-2020/",
             "type": "string"
           }
