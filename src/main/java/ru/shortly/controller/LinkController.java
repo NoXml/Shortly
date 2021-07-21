@@ -8,10 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.shortly.controller.schemas.Error;
 import ru.shortly.controller.schemas.Link;
 import ru.shortly.controller.schemas.NewLink;
+import ru.shortly.repository.HashMapUrlRepository;
+
 
 @RestController
 @RequestMapping
 public class LinkController {
+
+    private final HashMapUrlRepository hashMapUrlRepository;
+
+    public LinkController(HashMapUrlRepository hashMapUrlRepository) {
+        this.hashMapUrlRepository = hashMapUrlRepository;
+    }
 
     @PostMapping(value = "/urls", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object create(@RequestBody NewLink newLink) {

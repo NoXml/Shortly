@@ -1,5 +1,6 @@
-package ru.shortly;
+package ru.shortly.controller;
 
+import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -13,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ShortlyApplicationTests {
+class LinkControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -31,8 +32,8 @@ class ShortlyApplicationTests {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.url").value("https://ru.uefa.com/uefaeuro-2020/"))
-                .andExpect(jsonPath("$.shortUrl").value("http://localhost:80/a5f4d9"));
-
+                .andExpect(jsonPath("$.shortUrl").exists())
+                .andExpect(jsonPath("$.shortUrl").value(startsWith("http://localhost:80/")));
     }
 
     @Test
