@@ -1,46 +1,38 @@
 package ru.shortly.controller.schemas;
 
 public class Link {
-    private final String url;
-    private final String shortUrl;
+    private final ShortLink shortLink;
+    private final String longLink;
 
-    private Link(String url, String shortUrl) {
-        this.url = url;
-        this.shortUrl = shortUrl;
+    private Link(ShortLink shortLink, String longLink) {
+        this.shortLink = shortLink;
+        this.longLink = longLink;
     }
 
-    public String getUrl() {
-        return url;
+    public ShortLink getShortLink() {
+        return shortLink;
     }
 
-    public String getShortUrl() {
-        return shortUrl;
+    public String getLongLink() {
+        return longLink;
     }
 
     public static class Builder {
-        private String url;
-        private String shortUrl;
+        private ShortLink shortLink;
+        private String longLink;
 
-        public Builder withUrl(String url) {
-            this.url = url;
+        public Builder withShortLink(ShortLink shortLink) {
+            this.shortLink = shortLink;
             return this;
         }
 
-        public Builder withShortUrl(String shortUrl) {
-            this.shortUrl = shortUrl;
+        public Builder withLongLink(String longLink) {
+            this.longLink = longLink;
             return this;
         }
 
         public Link build() {
-            return new Link(url, shortUrl);
+            return new Link(shortLink, longLink);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Link{" +
-                "url='" + url + '\'' +
-                ", shortUrl='" + shortUrl + '\'' +
-                '}';
     }
 }

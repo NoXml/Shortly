@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.shortly.controller.schemas.Error;
 import ru.shortly.controller.schemas.Link;
 import ru.shortly.controller.schemas.NewLink;
+import ru.shortly.controller.schemas.ShortLink;
 import ru.shortly.repository.HashMapUrlRepository;
 
 
@@ -30,8 +31,13 @@ public class LinkController {
                     .build();
         } else {
             return new Link.Builder()
-                    .withUrl(newLink.getUrl())
-                    .withShortUrl("http://localhost:80/a5f4d9")
+                    .withShortLink(
+                            new ShortLink.Builder()
+                                    .withHost("http://localhost:80/")
+                                    .withId("a5f4d9")
+                                    .withUrl()
+                                    .build())
+                    .withLongLink(newLink.getUrl())
                     .build();
         }
     }
