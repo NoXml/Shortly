@@ -35,4 +35,12 @@ public class Link {
             return new Link(shortLink, longLink);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "shortLink=" + shortLink +
+                ", longLink='" + longLink + '\'' +
+                '}';
+    }
 }
