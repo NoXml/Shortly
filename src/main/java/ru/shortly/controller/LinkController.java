@@ -1,14 +1,15 @@
 package ru.shortly.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.shortly.controller.schemas.Error;
 import ru.shortly.controller.schemas.Link;
 import ru.shortly.controller.schemas.NewLink;
 import ru.shortly.controller.schemas.ShortLink;
 import ru.shortly.repository.HashMapUrlRepository;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping
@@ -21,8 +22,8 @@ public class LinkController {
     }
 
     @PostMapping(value = "/urls", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object create(@RequestBody NewLink newLink) {
-        if (newLink.getUrl().equals("")) {
+    public Object create(@Valid @RequestBody NewLink newLink, Errors errors) {
+        if (errors.hasErrors()) {
             return new Error.Builder()
                     .withCode("BadRequest")
                     .withMessage("Parameter 'url' must be not blank")
