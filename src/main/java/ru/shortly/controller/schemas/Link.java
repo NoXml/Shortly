@@ -1,12 +1,14 @@
 package ru.shortly.controller.schemas;
 
+import java.util.Objects;
+
 public class Link {
     private final ShortLink shortLink;
     private final String longLink;
 
     private Link(ShortLink shortLink, String longLink) {
-        this.shortLink = shortLink;
-        this.longLink = longLink;
+        this.shortLink = Objects.requireNonNull(shortLink, "shortLink");
+        this.longLink = Objects.requireNonNull(longLink, "longLink");
     }
 
     public ShortLink getShortLink() {

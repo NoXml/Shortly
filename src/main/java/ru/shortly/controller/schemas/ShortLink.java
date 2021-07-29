@@ -1,14 +1,16 @@
 package ru.shortly.controller.schemas;
 
+import java.util.Objects;
+
 public class ShortLink {
     private final String host;
     private final String id;
     private final String url;
 
     private ShortLink(String host, String id, String url) {
-        this.host = host;
-        this.id = id;
-        this.url = url;
+        this.host = Objects.requireNonNull(host, "host");
+        this.id = Objects.requireNonNull(id, "id");
+        this.url = Objects.requireNonNull(id, "url");
     }
 
     public String getHost() {

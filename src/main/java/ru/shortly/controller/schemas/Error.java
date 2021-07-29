@@ -1,12 +1,14 @@
 package ru.shortly.controller.schemas;
 
+import java.util.Objects;
+
 public class Error {
     private final String code;
     private final String message;
 
     private Error(String code, String message) {
-        this.code = code;
-        this.message = message;
+        this.code = Objects.requireNonNull(code, "code");
+        this.message = Objects.requireNonNull(message, "message");
     }
 
     public String getCode() {
