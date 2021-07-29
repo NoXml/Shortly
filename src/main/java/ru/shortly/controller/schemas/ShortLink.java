@@ -10,7 +10,7 @@ public class ShortLink {
     private ShortLink(String host, String id, String url) {
         this.host = Objects.requireNonNull(host, "host");
         this.id = Objects.requireNonNull(id, "id");
-        this.url = Objects.requireNonNull(id, "url");
+        this.url = Objects.requireNonNull(url, "url");
     }
 
     public String getHost() {
