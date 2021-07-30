@@ -1,5 +1,6 @@
 package ru.shortly.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class LinkController {
     public Object create(@Valid @RequestBody NewLink newLink, Errors errors) {
         if (errors.hasErrors()) {
             return new Error.Builder()
-                    .withCode("BadRequest")
-                    .withMessage("Parameter 'url' must be not blank")
+                    .withCode(String.valueOf(HttpStatus.BAD_REQUEST))
+                    .withMessage(String.valueOf(errors.getFieldErrors()))
                     .build();
         } else {
             return new Link.Builder()

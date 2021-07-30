@@ -58,8 +58,8 @@ class LinkControllerTest {
                         }
                         """))
                 .andDo(print())
-                .andExpect(jsonPath("$.code").value("BadRequest"))
-                .andExpect(jsonPath("$.message").value("Parameter 'url' must be not blank"));
+                .andExpect(jsonPath("$.code").value("400 BAD_REQUEST"))
+                .andExpect(jsonPath("$.message").value(startsWith("[Field error in object 'newLink' on field 'url'")));
     }
 
     @Test
@@ -73,7 +73,7 @@ class LinkControllerTest {
                         }
                         """))
                 .andDo(print())
-                .andExpect(jsonPath("$.code").value("BadRequest"))
-                .andExpect(jsonPath("$.message").value("Parameter 'url' must be not blank"));
+                .andExpect(jsonPath("$.code").value("400 BAD_REQUEST"))
+                .andExpect(jsonPath("$.message").value(startsWith("[Field error in object 'newLink' on field 'url'")));
     }
 }
