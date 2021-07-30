@@ -1,6 +1,7 @@
 package ru.shortly.controller;
 
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,9 +32,10 @@ class LinkControllerTest {
                         """))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.url").value("https://ru.uefa.com/uefaeuro-2020/"))
-                .andExpect(jsonPath("$.shortUrl").exists())
-                .andExpect(jsonPath("$.shortUrl").value(startsWith("http://localhost:80/")));
+                .andExpect(jsonPath("$.shortLink").exists())
+                .andExpect(jsonPath("$.shortLink.host").value("http://localhost:80/"))
+                .andExpect(jsonPath("$.shortLink.url").value(startsWith("http://localhost:80/")))
+                .andExpect(jsonPath("$.longLink").value("https://ru.uefa.com/uefaeuro-2020/"));
     }
 
     @Test
@@ -49,6 +51,13 @@ class LinkControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.code").value("BadRequest"))
                 .andExpect(jsonPath("$.message").value("Parameter 'url' must be not blank"));
+    }
 
+    @Test
+    void shouldProcessGetRequest() throws Exception {
+        this.mvc.perform(get("/{shortLinkId}", "a5f4d9"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Content from requested link")));
     }
 }
