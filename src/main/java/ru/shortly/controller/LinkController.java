@@ -23,23 +23,16 @@ public class LinkController {
     }
 
     @PostMapping(value = "/urls", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object create(@Valid @RequestBody NewLink newLink, Errors errors) {
-        if (errors.hasErrors()) {
-            return new Error.Builder()
-                    .withCode(String.valueOf(HttpStatus.BAD_REQUEST))
-                    .withMessage(String.valueOf(errors.getFieldErrors()))
-                    .build();
-        } else {
-            return new Link.Builder()
-                    .withShortLink(
-                            new ShortLink.Builder()
-                                    .withHost("http://localhost:80/")
-                                    .withId("a5f4d9")
-                                    .withUrl()
-                                    .build())
-                    .withLongLink(newLink.getUrl())
-                    .build();
-        }
+    public Object create(@Valid @RequestBody NewLink newLink) {
+        return new Link.Builder()
+                .withShortLink(
+                        new ShortLink.Builder()
+                                .withHost("http://localhost:80/")
+                                .withId("a5f4d9")
+                                .withUrl()
+                                .build())
+                .withLongLink(newLink.getUrl())
+                .build();
     }
 
     @GetMapping("/{shortLinkId}")
