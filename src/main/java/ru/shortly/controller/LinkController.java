@@ -1,10 +1,7 @@
 package ru.shortly.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import ru.shortly.controller.schemas.Error;
 import ru.shortly.controller.schemas.Link;
 import ru.shortly.controller.schemas.NewLink;
 import ru.shortly.controller.schemas.ShortLink;

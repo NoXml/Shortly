@@ -1,11 +1,9 @@
 package ru.shortly.repository;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
 import ru.shortly.controller.schemas.NewLink;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class HashMapUrlRepositoryTest {
