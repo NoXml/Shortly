@@ -3,9 +3,12 @@ package ru.shortly.controller.schemas;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class NewLink {
+
+    @NotBlank
     private final String url;
 
     @JsonCreator

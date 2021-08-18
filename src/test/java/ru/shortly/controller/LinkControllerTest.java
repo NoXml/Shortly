@@ -1,17 +1,18 @@
 package ru.shortly.controller;
 
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.startsWith;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,7 +40,15 @@ class LinkControllerTest {
     }
 
     @Test
-    void shouldPrintDefaultMessage() throws Exception {
+    void shouldProcessGetRequest() throws Exception {
+        this.mvc.perform(get("/{shortLinkId}", "a5f4d9"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Content from requested link")));
+    }
+
+    @Test
+    void shouldReturnDefaultMessage_1() throws Exception {
         this.mvc.perform(post("/urls")
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -49,15 +58,22 @@ class LinkControllerTest {
                         }
                         """))
                 .andDo(print())
-                .andExpect(jsonPath("$.code").value("BadRequest"))
-                .andExpect(jsonPath("$.message").value("Parameter 'url' must be not blank"));
+                .andExpect(status().is(400))
+                .andExpect(content().string("{\"url\":\"must not be blank\"}"));
     }
 
     @Test
-    void shouldProcessGetRequest() throws Exception {
-        this.mvc.perform(get("/{shortLinkId}", "a5f4d9"))
+    void shouldReturnDefaultMessage_2() throws Exception {
+        this.mvc.perform(post("/urls")
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content("""
+                        {
+                          "url": " "
+                        }
+                        """))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Content from requested link")));
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("{\"url\":\"must not be blank\"}"));
     }
 }
