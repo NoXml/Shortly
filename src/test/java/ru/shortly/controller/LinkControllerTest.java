@@ -43,7 +43,7 @@ class LinkControllerTest {
     void shouldProcessGetRequest() throws Exception {
         this.mvc.perform(get("/{shortLinkId}", "a5f4d9"))
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("There is no link with this ID in the repository")));
     }
 

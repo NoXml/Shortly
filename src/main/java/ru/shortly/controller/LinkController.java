@@ -1,6 +1,8 @@
 package ru.shortly.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.shortly.controller.schemas.Link;
 import ru.shortly.controller.schemas.NewLink;
@@ -18,6 +20,7 @@ import java.net.http.HttpResponse;
 public class LinkController {
 
     private final HashMapUrlRepository hashMapUrlRepository;
+    HttpClient client = HttpClient.newHttpClient();
 
     public LinkController(HashMapUrlRepository hashMapUrlRepository) {
         this.hashMapUrlRepository = hashMapUrlRepository;
@@ -39,17 +42,19 @@ public class LinkController {
     }
 
     @GetMapping("/{shortLinkId}")
-    public String getContentFromRequestedLink(@PathVariable(value = "shortLinkId", required = true) String id) throws Exception {
-        if (hashMapUrlRepository.getLink(id) != null) {
-            HttpClient client = HttpClient.newHttpClient();
+    public Object getContentFromRequestedLink(@PathVariable(value = "shortLinkId", required = true) String id) throws Exception {
+        NewLink foundLink = hashMapUrlRepository.getLink(id);
+        if (foundLink != null) {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(hashMapUrlRepository.getLink(id).getUrl()))
+                    .uri(URI.create(foundLink.getUrl()))
                     .GET()
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
         } else {
-            return "There is no link with this ID in the repository";
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("There is no link with this ID in the repository");
         }
     }
 }
