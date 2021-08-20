@@ -20,7 +20,7 @@ import java.net.http.HttpResponse;
 public class LinkController {
 
     private final HashMapUrlRepository hashMapUrlRepository;
-    HttpClient client = HttpClient.newHttpClient();
+    private final HttpClient client = HttpClient.newHttpClient();
 
     public LinkController(HashMapUrlRepository hashMapUrlRepository) {
         this.hashMapUrlRepository = hashMapUrlRepository;
